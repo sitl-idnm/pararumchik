@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 const STATUS_COLORS: Record<string, string> = {
-	open: 'bg-red-600',
-	closed: 'bg-green-600',
-	checking: 'bg-yellow-400',
+	open: 'bg-primary',
+	closed: 'bg-accent',
+	checking: 'bg-primary/50',
 }
 
 const CATEGORIES = [
@@ -36,16 +36,16 @@ interface Location {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-	'наркотики': '#dc2626', // красный
-	'притоны': '#2563eb',   // синий
-	'проституция': '#db2777', // розовый
-	'нелегальные бары': '#7c3aed', // фиолетовый
-	'default': '#facc15', // жёлтый
+	'наркотики': '#d22515',
+	'притоны': '#d22515',
+	'проституция': '#d22515',
+	'нелегальные бары': '#d22515',
+	'default': '#d22515',
 };
 
 function getMarkerIconByCategory(category: string, status: string) {
 	const color = CATEGORY_COLORS[category] || CATEGORY_COLORS['default'];
-	const border = status === 'checking' ? '#facc15' : status === 'closed' ? '#16a34a' : '#222';
+	const border = status === 'checking' ? '#d22515' : status === 'closed' ? '#dcd9d0' : '#080808';
 	return new DivIcon({
 		className: '',
 		html: `<div style="background:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:3px solid ${border};"><div style="width:18px;height:18px;border-radius:50%;background:${color};"></div></div>`
@@ -95,12 +95,12 @@ export default function Map() {
 	return (
 		<div className="h-screen w-full flex flex-col md:flex-row">
 			{/* Панель фильтров */}
-			<aside className="w-full md:w-64 bg-gray-800 shadow-lg z-10 p-4 md:block border-r border-gray-700">
-				<h2 className="font-bold text-lg mb-4 text-white">Фильтры</h2>
+			<aside className="w-full md:w-64 bg-background shadow-lg z-10 p-4 md:block border-r border-primary/20">
+				<h2 className="font-bold text-lg mb-4">Фильтры</h2>
 				<div className="mb-4">
-					<label className="block mb-1 font-medium text-gray-300">Категория</label>
+					<label className="block mb-1 font-medium text-accent/80">Категория</label>
 					<select
-						className="w-full border rounded p-2 bg-gray-700 text-white border-gray-600"
+						className="w-full border rounded p-2 bg-background text-accent border-primary/20"
 						value={category}
 						onChange={e => setCategory(e.target.value)}
 					>
@@ -111,9 +111,9 @@ export default function Map() {
 					</select>
 				</div>
 				<div>
-					<label className="block mb-1 font-medium text-gray-300">Статус</label>
+					<label className="block mb-1 font-medium text-accent/80">Статус</label>
 					<select
-						className="w-full border rounded p-2 bg-gray-700 text-white border-gray-600"
+						className="w-full border rounded p-2 bg-background text-accent border-primary/20"
 						value={status}
 						onChange={e => setStatus(e.target.value)}
 					>
@@ -143,12 +143,12 @@ export default function Map() {
 							icon={getMarkerIconByCategory(location.category, location.status)}
 						>
 							<Popup>
-								<div className="bg-gray-900 text-white p-2 rounded">
+								<div className="bg-background text-accent p-2 rounded border border-primary/20">
 									<h3 className="font-bold text-lg mb-1">{location.title}</h3>
-									<div className="mb-2 text-sm text-gray-400">Категория: {location.category}</div>
-									<div className="mb-2 text-gray-200">{location.description}</div>
-									<div className="text-xs text-gray-500">Статус: {STATUS.find(s => s.value === location.status)?.label}</div>
-									<Link href={`/object/${location.id}`} className="text-blue-400 underline text-sm mt-2 inline-block">Подробнее</Link>
+									<div className="mb-2 text-sm text-accent/80">Категория: {location.category}</div>
+									<div className="mb-2 text-accent">{location.description}</div>
+									<div className="text-xs text-accent/60">Статус: {STATUS.find(s => s.value === location.status)?.label}</div>
+									<Link href={`/object/${location.id}`} className="text-primary hover:text-primary/80 underline text-sm mt-2 inline-block">Подробнее</Link>
 								</div>
 							</Popup>
 						</Marker>

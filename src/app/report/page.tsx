@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 
 const MapPicker = dynamic(() => import('@/components/MapPicker.client'), {
 	ssr: false,
@@ -28,9 +29,12 @@ export default function ReportPage() {
 	const [anonymous, setAnonymous] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState("");
+	const router = useRouter();
 
 	function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
-		setFiles(e.target.files);
+		if (e.target.files && e.target.files.length > 0) {
+			setFiles(e.target.files);
+		}
 	}
 
 	function handleMapPick(lat: number, lng: number) {
@@ -38,28 +42,36 @@ export default function ReportPage() {
 		setAddress(`${lat.toFixed(6)}, ${lng.toFixed(6)}`);
 	}
 
-	function handleSubmit(e: FormEvent) {
+	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		setError("");
-		if (!category || !address || !description) {
-			setError("Пожалуйста, заполните все обязательные поля.");
+
+		if (!category || !description || !address) {
+			setError("Заполните все обязательные поля");
 			return;
 		}
-		const newReport = {
-			id: Date.now().toString(),
-			category,
-			address,
-			coords,
-			description,
-			anonymous,
-			files: files ? Array.from(files).map(f => f.name) : [],
-			createdAt: new Date().toISOString(),
-			status: 'checking'
-		};
-		const prev = JSON.parse(localStorage.getItem('reports') || '[]');
-		localStorage.setItem('reports', JSON.stringify([...prev, newReport]));
-		setSubmitted(true);
-	}
+
+		// Здесь будет отправка на сервер
+		const formData = new FormData();
+		formData.append('category', category);
+		formData.append('description', description);
+		formData.append('address', address);
+		formData.append('anonymous', String(anonymous));
+
+		if (files) {
+			Array.from(files).forEach(file => {
+				formData.append('files', file);
+			});
+		}
+
+		try {
+			// Имитация отправки
+			await new Promise(resolve => setTimeout(resolve, 1000));
+			router.push('/my-reports');
+		} catch (err) {
+			setError("Произошла ошибка при отправке заявки");
+		}
+	};
 
 	if (submitted) {
 		return (
@@ -86,9 +98,9 @@ export default function ReportPage() {
 					</div>
 
 					<div>
-						<label className="block mb-1 font-medium text-gray-300">Категория*</label>
+						<label className="block mb-1 font-medium text-accent/80">Категория*</label>
 						<select
-							className="w-full border rounded p-2 bg-gray-700 text-white border-gray-600"
+							className="w-full border rounded p-2 bg-gray-700 text-accent border-primary/20"
 							value={category}
 							onChange={e => setCategory(e.target.value)}
 							required
@@ -100,19 +112,20 @@ export default function ReportPage() {
 						</select>
 					</div>
 					<div>
-						<label className="block mb-1 font-medium text-gray-300">Адрес или координаты*</label>
+						<label className="block mb-1 font-medium text-accent/80">Адрес*</label>
 						<input
 							type="text"
-							className="w-full border rounded p-2 bg-gray-700 text-white border-gray-600"
+							className="w-full border rounded p-2 bg-gray-700 text-accent border-primary/20"
 							value={address}
 							onChange={e => setAddress(e.target.value)}
+							placeholder="Укажите точный адрес"
 							required
 						/>
 					</div>
 					<div>
-						<label className="block mb-1 font-medium text-gray-300">Описание*</label>
+						<label className="block mb-1 font-medium text-accent/80">Описание*</label>
 						<textarea
-							className="w-full border rounded p-2 bg-gray-700 text-white border-gray-600"
+							className="w-full border rounded p-2 bg-gray-700 text-accent border-primary/20"
 							value={description}
 							onChange={e => setDescription(e.target.value)}
 							rows={4}
@@ -121,13 +134,13 @@ export default function ReportPage() {
 						/>
 					</div>
 					<div>
-						<label className="block mb-1 font-medium text-gray-300">Вложения (фото/видео, не обязательно)</label>
+						<label className="block mb-1 font-medium text-accent/80">Вложения (фото/видео, не обязательно)</label>
 						<input
 							type="file"
 							multiple
 							accept="image/*,video/*"
 							onChange={handleFileChange}
-							className="w-full text-white bg-gray-700 border border-gray-600 rounded p-2 file:bg-gray-700 file:text-white file:border-0"
+							className="w-full text-accent bg-gray-700 border border-primary/20 rounded p-2 file:bg-primary/20 file:text-accent file:border-0"
 						/>
 					</div>
 					<div className="flex items-center gap-2">
@@ -136,14 +149,14 @@ export default function ReportPage() {
 							id="anon"
 							checked={anonymous}
 							onChange={e => setAnonymous(e.target.checked)}
-							className="accent-gray-600"
+							className="accent-primary"
 						/>
-						<label htmlFor="anon" className="text-sm text-gray-300">Отправить анонимно</label>
+						<label htmlFor="anon" className="text-sm text-accent/80">Отправить анонимно</label>
 					</div>
-					{error && <div className="text-red-400 text-sm">{error}</div>}
+					{error && <div className="text-primary text-sm">{error}</div>}
 					<button
 						type="submit"
-						className="w-full bg-black text-white py-2 rounded font-semibold hover:bg-gray-700 transition"
+						className="w-full bg-primary text-accent py-2 rounded font-semibold hover:bg-primary/80 transition"
 					>
 						Отправить заявку
 					</button>

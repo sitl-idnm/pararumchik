@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary: #d22515;
+  --accent: #dcd9d0;
+  --background: #080808;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--accent);
+}
+
+/* Исправляем стили Leaflet для темной темы */
+.leaflet-container {
+  background: #1a1a1a !important;
+}
+
+.leaflet-tile {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%) !important;
+}
+
+/* Отменяем фильтр для маркеров */
+.leaflet-pane {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* Отменяем темный фильтр для конкретных элементов */
+.no-dark-filter {
+  filter: none !important;
+}
+
+.leaflet-control-attribution {
+  display: none !important;
+}
+
+/* Скрываем элементы управления на превью */
+.leaflet-control-container {
+  display: none !important;
+}
+
+/* Анимация пульсации для активных точек */
+@keyframes activePulse {
+  0% {
+    opacity: 0.6;
+    r: 75;
+  }
+  50% {
+    opacity: 0.3;
+    r: 150;
+  }
+  100% {
+    opacity: 0.6;
+    r: 75;
+  }
+}
+
+.circle-active {
+  animation: activePulse 1.5s ease-in-out infinite;
+}
