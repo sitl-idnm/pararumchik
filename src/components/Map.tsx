@@ -5,11 +5,13 @@ import 'leaflet/dist/leaflet.css'
 import { Icon, DivIcon } from 'leaflet'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import defaultReports from '@/data/reports.json'
 
 const STATUS_COLORS: Record<string, string> = {
 	open: 'bg-primary',
 	closed: 'bg-accent',
 	checking: 'bg-primary/50',
+	unchecked: 'bg-yellow-500'
 }
 
 const CATEGORIES = [
@@ -23,6 +25,7 @@ const STATUS = [
 	{ value: 'open', label: 'Открыто' },
 	{ value: 'closed', label: 'Закрыто' },
 	{ value: 'checking', label: 'На проверке' },
+	{ value: 'unchecked', label: 'Не проверен' }
 ]
 
 interface Location {
@@ -31,7 +34,7 @@ interface Location {
 	lng: number
 	title: string
 	description: string
-	status: 'open' | 'closed' | 'checking'
+	status: 'open' | 'closed' | 'checking' | 'unchecked'
 	category: string
 }
 
@@ -45,7 +48,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 function getMarkerIconByCategory(category: string, status: string) {
 	const color = CATEGORY_COLORS[category] || CATEGORY_COLORS['default'];
-	const border = status === 'checking' ? '#d22515' : status === 'closed' ? '#dcd9d0' : '#080808';
+	const border = status === 'unchecked' ? '#ffd700' : status === 'checking' ? '#d22515' : status === 'closed' ? '#dcd9d0' : '#080808';
 	return new DivIcon({
 		className: '',
 		html: `<div style="background:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:3px solid ${border};"><div style="width:18px;height:18px;border-radius:50%;background:${color};"></div></div>`
@@ -55,24 +58,41 @@ function getMarkerIconByCategory(category: string, status: string) {
 export default function Map() {
 	const [locations, setLocations] = useState<Location[]>([])
 	const [category, setCategory] = useState<string>('')
-	const [status, setStatus] = useState<string>('')
+	const [status, setStatus] = useState<string>('unchecked')
 	const [isMounted, setIsMounted] = useState(false)
 
 	useEffect(() => {
 		setIsMounted(true)
 		if (typeof window !== 'undefined') {
-			const userReports = JSON.parse(localStorage.getItem('reports') || '[]')
-			const userLocations = userReports
-				.filter((r: any) => r.coords && r.status === 'open')
-				.map((r: any) => ({
-					id: r.id,
-					lat: r.coords.lat,
-					lng: r.coords.lng,
-					title: r.category,
-					description: r.description,
-					status: r.status,
-					category: r.category,
-				}))
+			// Загружаем точки и статусы
+			const savedReports = JSON.parse(localStorage.getItem('reports') || 'null')
+			const savedStatuses = JSON.parse(localStorage.getItem('point_statuses') || '{}')
+			const reportsToUse = savedReports || defaultReports.reports
+
+			console.log('Loading data:')
+			console.log('savedReports from localStorage:', savedReports)
+			console.log('savedStatuses from localStorage:', savedStatuses)
+			console.log('defaultReports from JSON:', defaultReports.reports)
+			console.log('reportsToUse:', reportsToUse)
+
+			const userLocations = reportsToUse
+				.filter((r: any) => r.coords)
+				.map((r: any) => {
+					console.log('Processing report:', r)
+					const location = {
+						id: r.id,
+						lat: r.coords.lat,
+						lng: r.coords.lng,
+						title: r.category,
+						description: r.description,
+						status: savedStatuses[r.id] || r.status || 'unchecked',
+						category: r.category,
+					}
+					console.log('Mapped location:', location)
+					return location
+				})
+			
+			console.log('Final locations:', userLocations)
 			setLocations(userLocations)
 		}
 		return () => setLocations([])
@@ -87,9 +107,18 @@ export default function Map() {
 	}
 
 	const filtered = locations.filter(
-		(loc) =>
-			(!category || loc.category === category) &&
-			(!status || loc.status === status)
+		(loc) => {
+			const statusMatch = !status || loc.status === status
+			const categoryMatch = !category || loc.category === category
+			console.log(
+				'Filtering:',
+				'\nLocation status:', loc.status,
+				'\nExpected status:', status,
+				'\nStatus match:', statusMatch,
+				'\nCategory:', loc.category
+			)
+			return statusMatch && categoryMatch
+		}
 	)
 
 	return (

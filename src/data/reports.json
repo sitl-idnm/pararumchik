@@ -1,0 +1,180 @@
+{
+  "reports": [
+    {
+      "id": "1713225601",
+      "coords": { "lat": 55.721914, "lng": 37.653936 },
+      "category": "притоны",
+      "description": "Evolve Gym",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225602",
+      "coords": { "lat": 55.721853, "lng": 37.654709 },
+      "category": "притоны",
+      "description": "Старлит плюс",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225603",
+      "coords": { "lat": 55.718562, "lng": 37.647908 },
+      "category": "притоны",
+      "description": "Хостел Порт",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225604",
+      "coords": { "lat": 55.718567, "lng": 37.646875 },
+      "category": "притоны",
+      "description": "Sv hostel",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225605",
+      "coords": { "lat": 55.718567, "lng": 37.646875 },
+      "category": "притоны",
+      "description": "Уютный дом",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225606",
+      "coords": { "lat": 55.724636, "lng": 37.650217 },
+      "category": "притоны",
+      "description": "Urapov-dom.com",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225607",
+      "coords": { "lat": 55.721138, "lng": 37.647720 },
+      "category": "притоны",
+      "description": "Просто",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225608",
+      "coords": { "lat": 55.716397, "lng": 37.644737 },
+      "category": "притоны",
+      "description": "Спектра",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225609",
+      "coords": { "lat": 55.716017, "lng": 37.646444 },
+      "category": "притоны",
+      "description": "Без названия",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225610",
+      "coords": { "lat": 55.726000, "lng": 37.640000 },
+      "category": "притоны",
+      "description": "Заходи",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225611",
+      "coords": { "lat": 55.716500, "lng": 37.645000 },
+      "category": "притоны",
+      "description": "Памир Альянс",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T12:00:00Z"
+    },
+    {
+      "id": "1713225612",
+      "coords": { "lat": 55.863163, "lng": 37.477215 },
+      "category": "притоны",
+      "description": "ул. Беломорская, д. 26, стр. 2 — Хостел и чайхона",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225613",
+      "coords": { "lat": 55.897471, "lng": 37.560154 },
+      "category": "притоны",
+      "description": "Дмитровское шоссе д. 157 — скопление мигрантов",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225614",
+      "coords": { "lat": 55.855259, "lng": 37.483158 },
+      "category": "притоны",
+      "description": "Кронштадтский бульвар, вл5-7",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225615",
+      "coords": { "lat": 55.872620, "lng": 37.444676 },
+      "category": "притоны",
+      "description": "Ленинградское шоссе д. 66А — подтверждено постояльцем",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225616",
+      "coords": { "lat": 55.859780, "lng": 37.429307 },
+      "category": "притоны",
+      "description": "ул. Фомичевой д. 13 — скопление около метро Сходненская",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225617",
+      "coords": { "lat": 55.831846, "lng": 37.524118 },
+      "category": "притоны",
+      "description": "ул. Приорова д. 28 — мигрантский хостел в заброшенном здании",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225618",
+      "coords": { "lat": 55.800257, "lng": 37.570018 },
+      "category": "притоны",
+      "description": "1-я Квесисская, 18c7 — хостел при Бутырском рынке",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225619",
+      "coords": { "lat": 55.855145, "lng": 37.485901 },
+      "category": "притоны",
+      "description": "Кронштадтский бульвар, 47 — бильярд, ателье, столовая",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225620",
+      "coords": { "lat": 55.799901, "lng": 37.595019 },
+      "category": "притоны",
+      "description": "4-й Вятский переулок, 16 — нелегальный хостел",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225621",
+      "coords": { "lat": 55.837024, "lng": 37.556468 },
+      "category": "притоны",
+      "description": "ул. Вучетича, 18, к.1 — скопление мигрантов",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    },
+    {
+      "id": "1713225622",
+      "coords": { "lat": 55.862230, "lng": 37.399006 },
+      "category": "проституция",
+      "description": "Шлюхи, подвоз на машине. Рядом охрана.",
+      "status": "unchecked",
+      "createdAt": "2024-03-17T13:00:00Z"
+    }
+  ]
+} 

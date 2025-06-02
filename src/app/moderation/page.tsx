@@ -10,21 +10,37 @@ interface Report {
 	anonymous: boolean;
 	files: string[];
 	createdAt: string;
-	status?: string; // 'checking' | 'open' | 'rejected'
+	status?: string; // 'checking' | 'open' | 'rejected' | 'unchecked'
 }
 
 export default function ModerationPage() {
 	const [reports, setReports] = useState<Report[]>([]);
+	const [statuses, setStatuses] = useState<Record<string, string>>({});
 
 	useEffect(() => {
+		// Загружаем исходные точки из JSON
 		const data = JSON.parse(localStorage.getItem("reports") || "[]");
-		setReports(data);
+		// Загружаем сохраненные статусы
+		const savedStatuses = JSON.parse(localStorage.getItem("point_statuses") || "{}");
+		setStatuses(savedStatuses);
+		
+		// Применяем сохраненные статусы к точкам
+		const reportsWithStatuses = data.map(r => ({
+			...r,
+			status: savedStatuses[r.id] || r.status || 'unchecked'
+		}));
+		setReports(reportsWithStatuses);
 	}, []);
 
 	function updateStatus(id: string, status: string) {
+		// Обновляем статус в отдельном хранилище
+		const newStatuses = { ...statuses, [id]: status };
+		setStatuses(newStatuses);
+		localStorage.setItem("point_statuses", JSON.stringify(newStatuses));
+
+		// Обновляем состояние компонента
 		const updated = reports.map(r => r.id === id ? { ...r, status } : r);
 		setReports(updated);
-		localStorage.setItem("reports", JSON.stringify(updated));
 	}
 
 	return (
@@ -43,9 +59,13 @@ export default function ModerationPage() {
 							<span className={
 								r.status === 'open' ? 'text-green-400' :
 									r.status === 'rejected' ? 'text-red-400' :
-										'text-yellow-400'
+										r.status === 'unchecked' ? 'text-yellow-400' :
+											'text-yellow-400'
 							}>
-								{r.status === 'open' ? 'Открыто' : r.status === 'rejected' ? 'Отклонено' : 'На модерации'}
+								{r.status === 'open' ? 'Открыто' : 
+								 r.status === 'rejected' ? 'Отклонено' : 
+								 r.status === 'unchecked' ? 'Не проверен' : 
+								 'На модерации'}
 							</span>
 						</div>
 						{r.status !== 'open' && (

@@ -42,7 +42,7 @@ const getCircleStyle = (status: string) => {
         ...baseStyle,
         color: '#ff1500',
         fillColor: '#ff1500',
-        fillOpacity: 0.9,
+        fillOpacity: 1,
         weight: 2,
       };
     case 'checking':
@@ -50,7 +50,7 @@ const getCircleStyle = (status: string) => {
         ...baseStyle,
         color: '#4444ff',
         fillColor: '#4444ff',
-        fillOpacity: 0.7,
+        fillOpacity: 0.9,
         weight: 2
       };
     case 'closed':
@@ -58,7 +58,7 @@ const getCircleStyle = (status: string) => {
         ...baseStyle,
         color: '#22d515',
         fillColor: '#22d515',
-        fillOpacity: 0.4,
+        fillOpacity: 0.8,
       };
     default:
       return baseStyle;
@@ -101,7 +101,7 @@ export default function MapPreview() {
                 pathOptions={{
                   color: '#ff1500',
                   fillColor: '#ff1500',
-                  fillOpacity: 0.4,
+                  fillOpacity: 0.6,
                   weight: 1,
                 }}
                 className="circle-active"
