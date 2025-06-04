@@ -6,16 +6,57 @@
   --primary: #d22515;
   --accent: #dcd9d0;
   --background: #080808;
+  --overlay: rgba(8, 8, 8, 0.92);
 }
 
 body {
   background-color: var(--background);
+  background-image: url('/images/dark-brick-wall.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--accent);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Добавляем темный оверлей поверх фона с градиентом */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(8, 8, 8, 0.85) 0%,
+    var(--overlay) 100%
+  );
+  backdrop-filter: brightness(0.9) contrast(1.1);
+  z-index: -1;
+}
+
+/* Стилизация карточек и контейнеров */
+.bg-gray-800 {
+  background-color: rgba(31, 41, 55, 0.85) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bg-gray-700 {
+  background-color: rgba(55, 65, 81, 0.85) !important;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Исправляем стили Leaflet для темной темы */
 .leaflet-container {
   background: #1a1a1a !important;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .leaflet-tile {
@@ -59,4 +100,22 @@ body {
 
 .circle-active {
   animation: activePulse 1.5s ease-in-out infinite;
+}
+
+/* Улучшенные стили для кнопок */
+button {
+  transition: all 0.2s ease-in-out !important;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Улучшенные стили для форм */
+input, textarea {
+  transition: all 0.2s ease-in-out !important;
+}
+
+input:focus, textarea:focus {
+  transform: scale(1.005);
 }
